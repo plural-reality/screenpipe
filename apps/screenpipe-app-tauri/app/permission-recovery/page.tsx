@@ -136,14 +136,9 @@ export default function PermissionRecoveryPage() {
     posthog.capture("permission_recovery_reset_and_fix", { permission });
     setFixingPermission(permission);
     try {
-      const result = await commands.resetAndRequestPermission(permission);
-      if (result.status === "error") {
-        console.error("Reset and request failed:", result.error);
-        // Fallback: open settings directly
-        await commands.openPermissionSettings(permission);
-      }
+      await commands.requestPermission(permission);
     } catch (error) {
-      console.error("Failed to reset and request permission:", error);
+      console.error("Failed to request permission:", error);
       // Fallback: open settings directly
       await commands.openPermissionSettings(permission);
     } finally {
